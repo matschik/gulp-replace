@@ -1,9 +1,9 @@
-# gulp-replace [![NPM version][npm-image]][npm-url] [![Build status][travis-image]][travis-url]
-> A string replace plugin for gulp 3
+# gulp-async-replace
+> A string replace plugin for Gulp 4
 
 ## Usage
 
-First, install `gulp-replace` as a development dependency:
+First, install `gulp-async-replace` as a development dependency:
 
 ```shell
 npm install --save-dev gulp-replace
@@ -13,7 +13,7 @@ Then, add it to your `gulpfile.js`:
 
 ### Simple string replace
 ```javascript
-var replace = require('gulp-replace');
+const replace = require('gulp-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -24,7 +24,7 @@ gulp.task('templates', function(){
 
 ### Simple regex replace
 ```javascript
-var replace = require('gulp-replace');
+const replace = require('gulp-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -36,7 +36,7 @@ gulp.task('templates', function(){
 
 ### String replace with function callback
 ```javascript
-var replace = require('gulp-replace');
+const replace = require('gulp-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -48,9 +48,28 @@ gulp.task('templates', function(){
 });
 ```
 
+### String replace with async function callback
+```javascript
+const replace = require('gulp-replace');
+const fs = require('fs');
+const {promisify} = require('util');
+
+const readFile = promisfy(fs.readFile);
+
+gulp.task('templates', function(){
+  gulp.src(['file.txt'])
+    .pipe(replace('foo', async function(match) {
+      const token = await readFile('token.txt', {encoding: 'utf8'});
+      // replace foo by a token contained in 'token.txt'
+      return token;
+    }))
+    .pipe(gulp.dest('build/'));
+});
+```
+
 ### Regex replace with function callback
 ```javascript
-var replace = require('gulp-replace');
+const replace = require('gulp-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -64,9 +83,28 @@ gulp.task('templates', function(){
 });
 ```
 
+### Regex replace with function callback
+```javascript
+const replace = require('gulp-replace');
+const fs = require('fs');
+const {promisify} = require('util');
+
+const readFile = promisfy(fs.readFile);
+
+gulp.task('templates', function(){
+  gulp.src(['file.txt'])
+    .pipe(replace(/foo(.{3})/g, async function(match, p1, offset, string) {
+      console.log('Found ' + match + ' with param ' + p1 + ' at ' + offset + ' inside of ' + string);
+      const token = await readFile('token.txt', {encoding: 'utf8'});
+      return token;
+    }))
+    .pipe(gulp.dest('build/'));
+});
+```
+
 ### Function callback with file object
 ```javascript
-var replace = require('gulp-replace');
+const replace = require('gulp-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -93,7 +131,7 @@ Type: `String`
 The string to search for.
 
 #### replacement
-Type: `String` or `Function`
+Type: `String` or `Function` or `AsyncFunction`
 
 The replacement string or function. If `replacement` is a function, it will be called once for each match and will be passed the string that is to be replaced.
 
@@ -107,7 +145,7 @@ Type: `RegExp`
 The regex pattern to search for. See the [MDN documentation for RegExp] for details.
 
 #### replacement
-Type: `String` or `Function`
+Type: `String` or `Function` or `AsyncFunction`
 
 The replacement string or function. See the [MDN documentation for String.replace] for details on special replacement string patterns and arguments to the replacement function.
 
@@ -129,8 +167,3 @@ Skip binary files. This option is true by default. If you want to replace conten
 
 [MDN documentation for RegExp]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
 [MDN documentation for String.replace]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter
-
-[travis-url]: https://travis-ci.org/lazd/gulp-replace
-[travis-image]: https://secure.travis-ci.org/lazd/gulp-replace.svg?branch=master
-[npm-url]: https://npmjs.org/package/gulp-replace
-[npm-image]: https://badge.fury.io/js/gulp-replace.svg
