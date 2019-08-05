@@ -6,14 +6,14 @@
 First, install `gulp-async-replace` as a development dependency:
 
 ```shell
-npm install --save-dev gulp-replace
+npm install --save-dev gulp-async-replace
 ```
 
 Then, add it to your `gulpfile.js`:
 
 ### Simple string replace
 ```javascript
-const replace = require('gulp-replace');
+const replace = require('gulp-async-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -24,7 +24,7 @@ gulp.task('templates', function(){
 
 ### Simple regex replace
 ```javascript
-const replace = require('gulp-replace');
+const replace = require('gulp-async-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -36,7 +36,7 @@ gulp.task('templates', function(){
 
 ### String replace with function callback
 ```javascript
-const replace = require('gulp-replace');
+const replace = require('gulp-async-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -50,7 +50,7 @@ gulp.task('templates', function(){
 
 ### String replace with async function callback
 ```javascript
-const replace = require('gulp-replace');
+const replace = require('gulp-async-replace');
 const fs = require('fs');
 const {promisify} = require('util');
 
@@ -69,7 +69,7 @@ gulp.task('templates', function(){
 
 ### Regex replace with function callback
 ```javascript
-const replace = require('gulp-replace');
+const replace = require('gulp-async-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -85,7 +85,7 @@ gulp.task('templates', function(){
 
 ### Regex replace with function callback
 ```javascript
-const replace = require('gulp-replace');
+const replace = require('gulp-async-replace');
 const fs = require('fs');
 const {promisify} = require('util');
 
@@ -104,7 +104,7 @@ gulp.task('templates', function(){
 
 ### Function callback with file object
 ```javascript
-const replace = require('gulp-replace');
+const replace = require('gulp-async-replace');
 
 gulp.task('templates', function(){
   gulp.src(['file.txt'])
@@ -121,7 +121,7 @@ gulp.task('templates', function(){
 
 ## API
 
-gulp-replace can be called with a string or regex.
+gulp-async-replace can be called with a string or regex.
 
 ### replace(string, replacement[, options])
 
@@ -151,7 +151,7 @@ The replacement string or function. See the [MDN documentation for String.replac
 
 The value of `this.file` will be equal to the [vinyl instance](https://github.com/gulpjs/vinyl#instance-properties) for the file being processed.
 
-### gulp-replace options
+### gulp-async-replace options
 
 An optional third argument, `options`, can be passed.
 
