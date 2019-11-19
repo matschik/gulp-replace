@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A string replace plugin for gulp with async support",
   "dependencies": {
-    "istextorbinary": "2.2.1",
+    "istextorbinary": "3.0.0",
     "readable-stream": "^2.0.1",
     "replacestream": "^4.0.0"
   },
